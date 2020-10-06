@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.APIRetrofit">
+
+    <org.neshan.mapsdk.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_marker" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvAddressHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="32dp"
+        android:focusable="true"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:layout_gravity="top"
+        android:paddingBottom="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:scaleY="0.5"
+            android:scaleX="0.5"
+            android:layout_gravity="center"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/addressTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:includeFontPadding="false"
+            android:textSize="16sp"
+            android:gravity="right"
+            android:ellipsize="end"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="darkPrimaryColor">#0d344c</color>
+    <color name="lightPrimaryColor">#2a5778</color>
+    <color name="primaryColor">#40A3C3</color>
+    <color name="accentColor">#42c29d</color>
+
+    <color name="textPrimaryColor">#212121</color>
+    <color name="textSecondaryColor">#757575</color>
+    <color name="textTertiaryColor">#BDBDBD</color>
+    <color name="textPrimaryColorInverse">#FFFFFF</color>
+    <color name="textSecondaryColorInverse">#B2FFFFFF</color>
+    <color name="textTertiaryColorInverse">#80FFFFFF</color>
+
+    <color name="iconPrimaryTintColor">#212121</color>
+    <color name="iconSecondaryTintColor">#757575</color>
+    <color name="iconTertiaryTintColor">#BDBDBD</color>
+    <color name="iconPrimaryTintColorInverse">#FFFFFF</color>
+    <color name="iconSecondaryTintColorInverse">#B2FFFFFF</color>
+    <color name="iconTertiaryTintColorInverse">#80FFFFFF</color>
+
+    <color name="gray">#656565</color>
+    <color name="lightGray">#959595</color>
+</resources>

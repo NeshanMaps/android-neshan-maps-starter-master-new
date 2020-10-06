@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.neshan.sample.starter">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.Search" />
+        <activity android:name=".activity.AddMarker" />
+        <activity android:name=".activity.DrawLine" />
+        <activity android:name=".activity.DrawPolygon" />
+        <activity android:name=".activity.ChangeCameraTilt" />
+        <activity android:name=".activity.ChangeCameraBearing" />
+        <activity android:name=".activity.ChangeStyle" />
+        <activity android:name=".activity.UserLocation" />
+        <activity android:name=".activity.TrafficLayer" />
+        <activity android:name=".activity.OnlineLayer" />
+        <activity android:name=".activity.POILayer" />
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".activity.DatabaseLayer" />
+        <activity android:name=".activity.APIRetrofit" />
+        <activity android:name=".activity.APIVolley" />
+        <activity android:name=".activity.APIOkHttp" />
+        <activity android:name=".activity.Cache" />
+        <activity android:name=".activity.RemoveMarker" />
+        <activity android:name=".activity.AddLabel" />
+        <activity android:name=".activity.Routing" />
+        <activity android:name=".activity.MarkerClustering" />
+    </application>
+
+</manifest>

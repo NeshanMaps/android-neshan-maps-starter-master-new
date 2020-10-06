@@ -1,0 +1,12 @@
+include ':app'
+/*
+include ':common'
+project(':common').projectDir=new File('/../../SDK_Refactor/SdkRefactor/common/')
+include ':searchsdk'
+project(':searchsdk').projectDir=new File('/../../SDK_Refactor/SdkRefactor/searchsdk/')
+include ':directionsdk'
+project(':directionsdk').projectDir=new File('/../../SDK_Refactor/SdkRefactor/directionsdk/')
+include ':mapsdk'
+project(':mapsdk').projectDir=new File('/../../SDK_Refactor/SdkRefactor/mapsdk/')
+*/
+

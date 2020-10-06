@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "org.neshan.sample.starter.v2.morteza"
+        minSdkVersion 19
+        versionCode 5
+        versionName "3.0.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        ndk {
+//            abiFilters 'armeabi-v7a'
+//        }
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
+        }
+    }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar','*.aar'])
+    //Support
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.palette:palette:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    //Play Services
+    implementation 'com.google.android.gms:play-services-gcm:16.1.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    //Test
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    androidTestImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
+    implementation group: 'com.vividsolutions', name: 'jts', version: '1.13'
+
+    //Neshan sdk library
+/*    implementation project(':mapsdk')
+    implementation project(':directionsdk')
+    implementation project(':searchsdk')*/
+    implementation files('libs/mapsdk-release.aar')
+    implementation files('libs/neshan-common-sdk.aar')
+    implementation files('libs/neshan-search-sdk.aar')
+    implementation files('libs/neshan-direction-sdk.aar')
+//    implementation files('libs/neshan-mapmatching-sdk.aar')
+//    implementation files('libs/neshan-georeverse-sdk.aar')
+//    implementation files('libs/neshan-distancematrix-sdk.aar')
+
+    //Room ORM
+    api "androidx.room:room-runtime:2.2.5"
+    annotationProcessor "androidx.room:room-compiler:2.2.5"
+    api "androidx.room:room-rxjava2:2.2.5"
+
+    // dexter runtime permissions
+    implementation 'com.karumi:dexter:4.2.0'
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    //Volley
+    implementation 'com.android.volley:volley:1.1.1'
+    //OKHTTP
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+
+    //RxJava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+}

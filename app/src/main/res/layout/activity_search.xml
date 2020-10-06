@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".activity.Search"
+    >
+
+    <org.neshan.mapsdk.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <EditText
+        android:id="@+id/search_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:background="@drawable/edit_text_search_bg"
+        android:hint="جستجو"
+        android:textSize="16dp" />
+
+
+    <ImageButton
+        android:id="@+id/show_markers_imageButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/search_editText"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/center_point"
+        android:background="@drawable/toggle_button_on_bg"
+        android:onClick="showMarkersClick"
+        app:srcCompat="@drawable/ic_marker_two"
+        android:tint="#ffffff"
+        />
+
+    <TextView
+        android:id="@+id/center_point"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_editText"
+        android:layout_centerHorizontal="true"
+        android:text="" />
+
+    <ImageButton
+        android:id="@+id/show_search_imageButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/search_editText"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_toRightOf="@+id/center_point"
+        android:background="@drawable/toggle_button_on_bg"
+        android:tint="#ffffff"
+        app:srcCompat="@drawable/ic_list_search"
+        android:onClick="showSearchClick"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/show_markers_imageButton" />
+</RelativeLayout>
