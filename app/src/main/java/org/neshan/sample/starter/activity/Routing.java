@@ -20,15 +20,15 @@ import com.carto.styles.MarkerStyleBuilder;
 import com.carto.utils.BitmapUtils;
 
 import org.neshan.common.model.LatLng;
-import org.neshan.directionsdk.NeshanDirection;
-import org.neshan.directionsdk.model.NeshanDirectionResult;
-import org.neshan.directionsdk.model.Route;
-import org.neshan.directionsdk.model.DirectionStep;
 import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Marker;
 import org.neshan.mapsdk.model.Polyline;
 import org.neshan.sample.starter.R;
 import org.neshan.common.utils.PolylineEncoding;
+import org.neshan.servicessdk.direction.NeshanDirection;
+import org.neshan.servicessdk.direction.model.DirectionStep;
+import org.neshan.servicessdk.direction.model.NeshanDirectionResult;
+import org.neshan.servicessdk.direction.model.Route;
 
 import java.util.ArrayList;
 

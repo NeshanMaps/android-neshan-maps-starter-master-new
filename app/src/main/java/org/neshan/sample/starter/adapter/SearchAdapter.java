@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import org.neshan.common.model.LatLng;
 import org.neshan.sample.starter.R;
-import org.neshan.searchsdk.model.Item;
-import org.neshan.searchsdk.model.Location;
+import org.neshan.servicessdk.search.model.Item;
+import org.neshan.servicessdk.search.model.Location;
 
 import java.util.List;
 

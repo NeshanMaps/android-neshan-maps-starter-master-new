@@ -27,10 +27,10 @@ import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Marker;
 import org.neshan.sample.starter.R;
 import org.neshan.sample.starter.adapter.SearchAdapter;
-import org.neshan.searchsdk.NeshanSearch;
-import org.neshan.searchsdk.model.Item;
-import org.neshan.searchsdk.model.Location;
-import org.neshan.searchsdk.model.NeshanSearchResult;
+import org.neshan.servicessdk.search.NeshanSearch;
+import org.neshan.servicessdk.search.model.Item;
+import org.neshan.servicessdk.search.model.Location;
+import org.neshan.servicessdk.search.model.NeshanSearchResult;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -18,7 +18,6 @@ import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Marker;
 import org.neshan.sample.starter.R;
-import org.neshan.mapsdk.internal.database.NajaMapDatabase;
 
 public class AddMarker extends AppCompatActivity {
 
