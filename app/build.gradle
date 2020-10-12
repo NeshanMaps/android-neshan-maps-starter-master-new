@@ -58,8 +58,8 @@ dependencies {
 
     //Neshan sdk library
     implementation 'neshan-android-sdk:mobile-sdk:1.0.0'
-    implementation 'neshan-android-sdk:common-sdk:0.0.1'
     implementation 'neshan-android-sdk:services-sdk:1.0.0'
+    implementation 'neshan-android-sdk:common-sdk:0.0.1'
 
     //Room ORM
     api "androidx.room:room-runtime:2.2.5"
