@@ -7,10 +7,10 @@
 آموزش داده شده‌است.
 
 توضیحات مربوط به هر یک از صفحات این اپلیکیشن در
-[ویکی](https://github.com/NeshanMaps/android-neshan-maps-starter/wiki)
+[ویکی](https://github.com/NeshanMaps/android-neshan-maps-starter-master-new/wiki)
 این پروژه موجود است.
 
 
-[این اینجا شروع کنید :)](https://github.com/NeshanMaps/android-neshan-maps-starter/wiki)
+[این اینجا شروع کنید :)](https://github.com/NeshanMaps/android-neshan-maps-starter-master-new/wiki)
 
 </div>
