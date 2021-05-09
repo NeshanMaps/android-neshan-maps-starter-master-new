@@ -20,8 +20,8 @@ allprojects {
         google()
         jcenter()
         //Add Neshan maven repo here
-        maven { url "https://dl.bintray.com/neshan/neshan-android-sdk" }
-        maven { url "http://192.168.5.28:8081/artifactory/mobile-release" }
+        maven { url "https://maven.neshan.org/artifactory/public-maven" }
+//        maven { url "http://192.168.5.28:8081/artifactory/mobile-release" }
     }
 }
 
