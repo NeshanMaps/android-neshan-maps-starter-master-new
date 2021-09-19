@@ -13,6 +13,8 @@
 
 [از اینجا شروع کنید :)](https://platform.neshan.org/sdk/android-sdk-getting-started)
   
+</div>
+
   # Neshan Maps Android SDK
 
 Neshan platform is providing map infrastructures. You can simply use the APIs and development kits in your [IOS](https://platform.neshan.org/sdk/ios-sdk), [Android](https://platform.neshan.org/sdk/android-sdk), [ReactJS](https://platform.neshan.org/sdk/web-sdk), [AngularJS](https://github.com/maherAshori/Neshan-Map) and [WordPress](https://platform.neshan.org/sdk/wordpress-addon) apps.
@@ -132,4 +134,3 @@ For more information about the usage of Neshan Map SDK, please check out the [wi
 
 Please do not hesitate to [contact us](https://platform.neshan.org/contact) if you require any further assistance about using the SDK.
 
-</div>
