@@ -318,7 +318,7 @@ public class UserLocation extends AppCompatActivity {
     public void focusOnUserLocation(View view) {
         if(userLocation != null) {
             map.moveCamera(
-                    new LatLng(userLocation.getLongitude(), userLocation.getLatitude()), 0.25f);
+                    new LatLng(userLocation.getLatitude(),userLocation.getLongitude() ), 0.25f);
             map.setZoom(15, 0.25f);
         }
     }
