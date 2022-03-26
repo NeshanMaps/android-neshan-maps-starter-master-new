@@ -1,32 +1,31 @@
 package org.neshan.sample.starter.activity;
 
 import android.graphics.BitmapFactory;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.carto.styles.AnimationStyle;
 import com.carto.styles.AnimationStyleBuilder;
 import com.carto.styles.AnimationType;
 import com.carto.styles.MarkerStyle;
 import com.carto.styles.MarkerStyleBuilder;
-import com.carto.utils.BitmapUtils;
-import com.vividsolutions.jts.geom.GeometryFactory;
 
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
+import org.neshan.mapsdk.internal.utils.BitmapUtils;
 import org.neshan.mapsdk.model.Marker;
 import org.neshan.sample.starter.R;
 
 public class AddMarker extends AppCompatActivity {
 
     // map UI element
-    MapView map;
+    private MapView map;
 
     // marker animation style
-    AnimationStyle animSt;
-
+    private AnimationStyle animSt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class AddMarker extends AppCompatActivity {
 
         // when clicked on map, a marker is added in clicked location
         map.setOnMapClickListener(latLng -> {
-           map.addMarker(createMarker(latLng));
+            map.addMarker(createMarker(latLng));
         });
         // when on marker clicked, change marker style to blue
         map.setOnMarkerClickListener(marker1 -> {
@@ -64,8 +63,6 @@ public class AddMarker extends AppCompatActivity {
     private void initViews() {
         map = findViewById(R.id.map);
     }
-
-
 
     // This method gets a LatLng as input and adds a marker on that position
     private Marker createMarker(LatLng loc) {
@@ -92,7 +89,7 @@ public class AddMarker extends AppCompatActivity {
         return new Marker(loc, markSt);
     }
 
-    private void changeMarkerToBlue(Marker redMarker){
+    private void changeMarkerToBlue(Marker redMarker) {
         // create new marker style
         MarkerStyleBuilder markStCr = new MarkerStyleBuilder();
         markStCr.setSize(30f);

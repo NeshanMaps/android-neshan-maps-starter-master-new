@@ -14,33 +14,59 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity">
+        <activity
+            android:name=".activity.DrawCircle"
+            android:exported="false" />
+        <activity android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Search" />
-        <activity android:name=".activity.AddMarker" />
-        <activity android:name=".activity.DrawLine" />
-        <activity android:name=".activity.DrawPolygon" />
-        <activity android:name=".activity.ChangeCameraTilt" />
-        <activity android:name=".activity.ChangeCameraBearing" />
-        <activity android:name=".activity.ChangeStyle" />
-        <activity android:name=".activity.UserLocation" />
-        <activity android:name=".activity.TrafficLayer" />
-        <activity android:name=".activity.OnlineLayer" />
-        <activity android:name=".activity.POILayer" />
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".activity.DatabaseLayer" />
-        <activity android:name=".activity.APIRetrofit" />
-        <activity android:name=".activity.APIVolley" />
-        <activity android:name=".activity.APIOkHttp" />
-        <activity android:name=".activity.Cache" />
-        <activity android:name=".activity.RemoveMarker" />
-        <activity android:name=".activity.AddLabel" />
-        <activity android:name=".activity.Routing" />
-        <activity android:name=".activity.MarkerClustering" />
+        <activity android:name=".activity.Search"
+            android:exported="false"/>
+        <activity android:name=".activity.AddMarker"
+            android:exported="false"/>
+        <activity android:name=".activity.DrawLine"
+            android:exported="false"/>
+        <activity android:name=".activity.DrawPolygon"
+            android:exported="false"/>
+        <activity android:name=".activity.ChangeCameraTilt"
+            android:exported="false"/>
+        <activity android:name=".activity.ChangeCameraBearing"
+            android:exported="false"/>
+        <activity android:name=".activity.ChangeStyle"
+            android:exported="false"/>
+        <activity android:name=".activity.UserLocation"
+            android:exported="false"/>
+        <activity android:name=".activity.TrafficLayer"
+            android:exported="false"/>
+        <activity android:name=".activity.OnlineLayer"
+            android:exported="false"/>
+        <activity android:name=".activity.POILayer"
+            android:exported="false"/>
+        <activity android:name=".DashboardActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.DatabaseLayer"
+            android:exported="false"/>
+        <activity android:name=".activity.APIRetrofit"
+            android:exported="false"/>
+        <activity android:name=".activity.APIVolley"
+            android:exported="false"/>
+        <activity android:name=".activity.APIOkHttp"
+            android:exported="false"/>
+        <activity android:name=".activity.Cache"
+            android:exported="false"/>
+        <activity android:name=".activity.RemoveMarker"
+            android:exported="false"/>
+        <activity android:name=".activity.AddLabel"
+            android:exported="false"/>
+        <activity android:name=".activity.Routing"
+            android:exported="false"/>
+        <activity android:name=".activity.MarkerClustering"
+            android:exported="false"/>
     </application>
 
 </manifest>

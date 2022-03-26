@@ -4,18 +4,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.carto.graphics.Color;
+import com.carto.styles.LineStyle;
+import com.carto.styles.LineStyleBuilder;
+
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
+import org.neshan.mapsdk.model.Circle;
 import org.neshan.sample.starter.R;
 
-public class TrafficLayer extends AppCompatActivity {
+public class DrawCircle extends AppCompatActivity {
 
     // map UI element
     private MapView map;
+    private Circle circle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +29,7 @@ public class TrafficLayer extends AppCompatActivity {
         // starting app in full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_traffic_layer);
+        setContentView(R.layout.activity_draw_circle);
     }
 
     @Override
@@ -47,20 +52,32 @@ public class TrafficLayer extends AppCompatActivity {
         map = findViewById(R.id.map);
     }
 
-    // Initializing map
     private void initMap() {
-        map.setTrafficEnabled(true);
         // Setting map focal position to a fixed position and setting camera zoom
         map.moveCamera(new LatLng(35.767234, 51.330743), 0);
         map.setZoom(14, 0);
-        map.getSettings().setZoomControlsEnabled(true);
     }
 
-    public void toggleTrafficLayer(View view) {
-        ToggleButton toggleButton = (ToggleButton) view;
-        if (toggleButton.isChecked())
-            map.setTrafficEnabled(true);
-        else
-            map.setTrafficEnabled(false);
+    public void drawCircle(View view) {
+        //remove circle from map if exist
+        if (circle != null) {
+            map.removeCircle(circle);
+        }
+
+        circle = new Circle(new LatLng(35.762294, 51.325525), 100, new Color((short) 2, (short) 119, (short) 189, (short) 190), getLineStyle());
+
+
+        map.addCircle(circle);
+
+        // focusing camera on first point of drawn polygon
+        map.moveCamera(new LatLng(35.762294, 51.325525), 0.25f);
+        map.setZoom(14, 0);
+    }
+
+    private LineStyle getLineStyle() {
+        LineStyleBuilder lineStyleBuilder = new LineStyleBuilder();
+        lineStyleBuilder.setColor(new Color((short) 2, (short) 50, (short) 189, (short) 190));
+        lineStyleBuilder.setWidth(5f);
+        return lineStyleBuilder.buildStyle();
     }
 }

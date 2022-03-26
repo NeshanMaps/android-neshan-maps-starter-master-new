@@ -4,9 +4,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,7 +12,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ToggleButton;
 
-import com.carto.core.MapRange;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.carto.core.ScreenBounds;
 import com.carto.core.ScreenPos;
 import com.carto.styles.AnimationStyle;
@@ -38,12 +36,11 @@ import java.util.ArrayList;
 public class DatabaseLayer extends AppCompatActivity {
 
     // map UI element
-    MapView map;
+    private MapView map;
 
     // our database points
-    SQLiteDatabase pointsDB;
-    ArrayList<Marker> markers = new ArrayList<>();
-
+    private SQLiteDatabase pointsDB;
+    private ArrayList<Marker> markers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +84,6 @@ public class DatabaseLayer extends AppCompatActivity {
         map.moveCamera(new LatLng(35.767234, 51.330743), 0);
         map.setZoom(14, 0);
     }
-
 
     // copy database.sqlite file from asset folder to /data/data/... and read points and add marker on map
     private void getDBPoints() {
@@ -150,7 +146,6 @@ public class DatabaseLayer extends AppCompatActivity {
         }
         cursor.close();
     }
-
 
     // This method gets a LatLng as input and adds a marker on that position
     private Marker addMarker(LatLng loc) {

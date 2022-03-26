@@ -2,23 +2,25 @@ package org.neshan.sample.starter;
 
 import android.content.Intent;
 import android.net.Uri;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.neshan.sample.starter.activity.APIOkHttp;
 import org.neshan.sample.starter.activity.APIRetrofit;
 import org.neshan.sample.starter.activity.APIVolley;
+import org.neshan.sample.starter.activity.AddLabel;
 import org.neshan.sample.starter.activity.AddMarker;
 import org.neshan.sample.starter.activity.Cache;
 import org.neshan.sample.starter.activity.ChangeCameraBearing;
 import org.neshan.sample.starter.activity.ChangeCameraTilt;
 import org.neshan.sample.starter.activity.ChangeStyle;
 import org.neshan.sample.starter.activity.DatabaseLayer;
+import org.neshan.sample.starter.activity.DrawCircle;
 import org.neshan.sample.starter.activity.DrawLine;
 import org.neshan.sample.starter.activity.DrawPolygon;
-import org.neshan.sample.starter.activity.AddLabel;
 import org.neshan.sample.starter.activity.MarkerClustering;
 import org.neshan.sample.starter.activity.OnlineLayer;
 import org.neshan.sample.starter.activity.POILayer;
@@ -56,6 +58,11 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void goToDrawPolygonActivity(View view) {
         Intent intent = new Intent(this, DrawPolygon.class);
+        startActivity(intent);
+    }
+
+    public void goToDrawCircleActivity(View view) {
+        Intent intent = new Intent(this, DrawCircle.class);
         startActivity(intent);
     }
 

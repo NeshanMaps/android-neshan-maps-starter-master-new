@@ -2,11 +2,7 @@ package org.neshan.sample.starter.activity;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,6 +10,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.carto.core.ScreenBounds;
 import com.carto.core.ScreenPos;
@@ -50,7 +50,7 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
     // map UI element
     private MapView map;
     private Marker centerMarker;
-    private ArrayList<Marker> markers=new ArrayList<>();
+    private ArrayList<Marker> markers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,17 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
         setContentView(R.layout.activity_search);
         // everything related to ui is initialized here
         initLayoutReferences();
+    }
+
+    @Override
+    public void onSeachItemClick(LatLng LatLng) {
+        closeKeyBoard();
+        clearMarkers();
+        adapter.updateList(new ArrayList<Item>());
+        map.moveCamera(LatLng, 0);
+        map.setZoom(16f, 0);
+        addMarker(LatLng, 30f);
+
     }
 
     // Initializing layout references (views, map and map events)
@@ -99,7 +110,6 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
         recyclerView.setAdapter(adapter);
     }
 
-
     private void initMap() {
         // Setting map focal position to a fixed position and setting camera zoom
         LatLng LatLng = new LatLng(35.767234, 51.330743);
@@ -113,15 +123,21 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
     private void search(String term) {
         LatLng searchPosition = map.getCameraTargetPosition();
         updateCenterMarker(searchPosition);
-        new NeshanSearch.Builder("service.PnRV9ocd8zm9QYYlJUNLJoAihE3hfy34WUZ6jcjr")
+        new NeshanSearch.Builder("service.oz8cfBdCEdmTv8qGx1835A1OPcVdq5DcTGgMN6z9")
                 .setLocation(searchPosition)
                 .setTerm(term)
                 .build().call(new Callback<NeshanSearchResult>() {
             @Override
             public void onResponse(Call<NeshanSearchResult> call, Response<NeshanSearchResult> response) {
-                NeshanSearchResult result = response.body();
-                items=result.getItems();
-                adapter.updateList(items);
+                if (response.code() == 403) {
+                    Toast.makeText(Search.this, "کلید دسترسی نامعتبر", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (response.body() != null) {
+                    NeshanSearchResult result = response.body();
+                    items = result.getItems();
+                    adapter.updateList(items);
+                }
             }
 
             @Override
@@ -144,7 +160,6 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
                         (BitmapFactory.decodeResource(getResources(), R.drawable.center_marker)));
         return markerStyleBuilder.buildStyle();
     }
-
 
     private Marker addMarker(LatLng LatLng, float size) {
         Marker marker = new Marker(LatLng, getMarkerStyle(size));
@@ -169,7 +184,6 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
         }
     }
 
-
     public void showSearchClick(View view) {
         closeKeyBoard();
         adapter.updateList(items);
@@ -177,7 +191,7 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
     }
 
     private void clearMarkers() {
-        for(Marker marker:markers){
+        for (Marker marker : markers) {
             map.removeMarker(marker);
         }
         markers.clear();
@@ -202,20 +216,10 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
         }
 
         if (items.size() > 0) {
-            map.moveToCameraBounds(new LatLngBounds(new LatLng(minLat,minLng ), new LatLng(maxLat, maxLng)),
+            map.moveToCameraBounds(new LatLngBounds(new LatLng(minLat, minLng), new LatLng(maxLat, maxLng)),
                     new ScreenBounds(new ScreenPos(0, 0), new ScreenPos(map.getWidth(), map.getHeight())),
                     true, 0.5f);
         }
     }
 
-    @Override
-    public void onSeachItemClick(LatLng LatLng) {
-        closeKeyBoard();
-        clearMarkers();
-        adapter.updateList(new ArrayList<Item>());
-        map.moveCamera(LatLng, 0);
-        map.setZoom(16f, 0);
-        addMarker(LatLng, 30f);
-
-    }
 }

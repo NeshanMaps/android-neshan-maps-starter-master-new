@@ -11,13 +11,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.carto.styles.MarkerStyle;
 import com.carto.styles.MarkerStyleBuilder;
@@ -50,10 +51,10 @@ import org.neshan.sample.starter.BuildConfig;
 import org.neshan.sample.starter.R;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class UserLocation extends AppCompatActivity {
+
     private static final String TAG = UserLocation.class.getName();
 
     // used to track request permissions
@@ -67,8 +68,7 @@ public class UserLocation extends AppCompatActivity {
     private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 1000;
 
     // map UI element
-    MapView map;
-
+    private MapView map;
 
     // User's current location
     private Location userLocation;
@@ -81,7 +81,6 @@ public class UserLocation extends AppCompatActivity {
     // boolean flag to toggle the ui
     private Boolean mRequestingLocationUpdates;
     private Marker marker;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +103,7 @@ public class UserLocation extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         startLocationUpdates();
     }
@@ -113,6 +112,26 @@ public class UserLocation extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         stopLocationUpdates();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            // Check for the integer request code originally supplied to startResolutionForResult().
+            case REQUEST_CODE:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        Log.e(TAG, "User agreed to make required location settings changes.");
+                        // Nothing to do. startLocationupdates() gets called in onResume again.
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Log.e(TAG, "User chose not to make required location settings changes.");
+                        mRequestingLocationUpdates = false;
+                        break;
+                }
+                break;
+        }
     }
 
     // Initializing layout references (views, map and map events)
@@ -124,17 +143,16 @@ public class UserLocation extends AppCompatActivity {
     }
 
     // We use findViewByID for every element in our layout file here
-    private void initViews(){
+    private void initViews() {
         map = findViewById(R.id.map);
     }
 
     // Initializing map
-    private void initMap(){
+    private void initMap() {
         // Setting map focal position to a fixed position and setting camera zoom
-        map.moveCamera(new LatLng(35.767234, 51.330743),0 );
-        map.setZoom(14,0);
+        map.moveCamera(new LatLng(35.767234, 51.330743), 0);
+        map.setZoom(14, 0);
     }
-
 
     private void initLocation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -164,7 +182,6 @@ public class UserLocation extends AppCompatActivity {
         locationSettingsRequest = builder.build();
 
     }
-
 
     /**
      * Starting location updates
@@ -256,26 +273,6 @@ public class UserLocation extends AppCompatActivity {
                 }).check();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            // Check for the integer request code originally supplied to startResolutionForResult().
-            case REQUEST_CODE:
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
-                        Log.e(TAG, "User agreed to make required location settings changes.");
-                        // Nothing to do. startLocationupdates() gets called in onResume again.
-                        break;
-                    case Activity.RESULT_CANCELED:
-                        Log.e(TAG, "User chose not to make required location settings changes.");
-                        mRequestingLocationUpdates = false;
-                        break;
-                }
-                break;
-        }
-    }
-
     private void openSettings() {
         Intent intent = new Intent();
         intent.setAction(
@@ -287,18 +284,16 @@ public class UserLocation extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     private void onLocationChange() {
-        if(userLocation != null) {
+        if (userLocation != null) {
             addUserMarker(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
         }
     }
 
-
     // This method gets a LatLng as input and adds a marker on that position
-    private void addUserMarker(LatLng loc){
+    private void addUserMarker(LatLng loc) {
         //remove existing marker from map
-        if(marker!=null){
+        if (marker != null) {
             map.removeMarker(marker);
         }
         // Creating marker style. We should use an object of type MarkerStyleCreator, set all features on it
@@ -316,9 +311,9 @@ public class UserLocation extends AppCompatActivity {
     }
 
     public void focusOnUserLocation(View view) {
-        if(userLocation != null) {
+        if (userLocation != null) {
             map.moveCamera(
-                    new LatLng(userLocation.getLatitude(),userLocation.getLongitude() ), 0.25f);
+                    new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), 0.25f);
             map.setZoom(15, 0.25f);
         }
     }

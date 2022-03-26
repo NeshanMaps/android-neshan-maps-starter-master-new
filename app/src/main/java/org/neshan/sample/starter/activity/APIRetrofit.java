@@ -1,13 +1,14 @@
 package org.neshan.sample.starter.activity;
 
-import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
@@ -16,9 +17,6 @@ import org.neshan.sample.starter.model.address.NeshanAddress;
 import org.neshan.sample.starter.network.RetrofitClientInstance;
 import org.neshan.sample.starter.network.ReverseService;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.PublishSubject;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,7 +61,6 @@ public class APIRetrofit extends AppCompatActivity {
 
     }
 
-
     // We use findViewByID for every element in our layout file here
     private void initViews() {
         map = findViewById(R.id.map);
@@ -74,7 +71,7 @@ public class APIRetrofit extends AppCompatActivity {
     // Initializing map
     private void initMap() {
         // Setting map focal position to a fixed position and setting camera zoom
-        map.moveCamera(new LatLng(35.767234,51.330743), 0);
+        map.moveCamera(new LatLng(35.767234, 51.330743), 0);
         map.setZoom(14, 0);
 
         map.setOnCameraMoveFinishedListener(i -> {
@@ -84,7 +81,7 @@ public class APIRetrofit extends AppCompatActivity {
     }
 
     private void getReverseApi(LatLng currentLocation) {
-        getDataService.getReverse(currentLocation.getLatitude() , currentLocation.getLongitude()).enqueue(new Callback<NeshanAddress>() {
+        getDataService.getReverse(currentLocation.getLatitude(), currentLocation.getLongitude()).enqueue(new Callback<NeshanAddress>() {
             @Override
             public void onResponse(Call<NeshanAddress> call, Response<NeshanAddress> response) {
                 String address = response.body().getAddress();

@@ -1,8 +1,16 @@
 package org.neshan.sample.starter.activity;
 
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.text.Html;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.carto.styles.AnimationStyle;
 import com.carto.styles.AnimationStyleBuilder;
@@ -12,16 +20,6 @@ import com.carto.styles.MarkerStyleBuilder;
 import com.carto.utils.BitmapUtils;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-import android.text.Html;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
-
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Marker;
@@ -29,27 +27,25 @@ import org.neshan.sample.starter.R;
 
 public class RemoveMarker extends AppCompatActivity {
 
-
     // map UI element
-    MapView map;
+    private MapView map;
     // Marker that will be added on map
-    Marker marker;
+    private Marker marker;
     // marker animation style
-    AnimationStyle animSt;
+    private AnimationStyle animSt;
     // markerId bottom sheet
-    TextView marker_id;
+    private TextView marker_id;
     // remove marker button
-    Button remove_marker;
+    private Button remove_marker;
     // bottom sheet layout and behavior
     private View remove_marker_bottom_sheet;
     private BottomSheetBehavior bottomSheetBehavior;
     // save selected Marker for select and deselect function
-    Marker selectedMarker = null;
+    private Marker selectedMarker = null;
     // Tip Strings
     static String firstTipString = "<b>" + "قدم اول: " + "</b> " + "برای ایجاد پین جدید نگهدارید!";
     static String secondTipString = "<b>" + "قدم دوم: " + "</b> " + "برای حذف روی پین لمس کنید!";
-    private int markerIndex=0;
-
+    private int markerIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +101,7 @@ public class RemoveMarker extends AppCompatActivity {
                     }
                 }
                 // addMarker adds a marker (pretty self explanatory :D) to the clicked location
-                addMarker(var1, "Marker "+ ++markerIndex);
+                addMarker(var1, "Marker " + ++markerIndex);
             }
         });
 
@@ -161,6 +157,7 @@ public class RemoveMarker extends AppCompatActivity {
         // bottom sheet include tag and behavior
         remove_marker_bottom_sheet = findViewById(R.id.remove_marker_bottom_sheet_include);
         bottomSheetBehavior = BottomSheetBehavior.from(remove_marker_bottom_sheet);
+//        bottomSheetBehavior.setHideable(true);
         remove_marker.setVisibility(View.GONE);
         marker_id.setText(Html.fromHtml(firstTipString));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);

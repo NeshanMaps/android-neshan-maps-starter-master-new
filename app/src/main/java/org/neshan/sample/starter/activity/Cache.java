@@ -1,21 +1,19 @@
 package org.neshan.sample.starter.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
 import org.neshan.sample.starter.R;
 
-
 public class Cache extends AppCompatActivity {
 
     // map UI element
-    MapView map;
-
+    private MapView map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,20 +35,19 @@ public class Cache extends AppCompatActivity {
     }
 
     // We use findViewByID for every element in our layout file here
-    private void initViews(){
+    private void initViews() {
         map = findViewById(R.id.map);
     }
 
-
     // Initializing map
-    private void initMap(){
+    private void initMap() {
         // Cache size is 10 MB
         map.setCacheSize(10);
         // Set cache location
         map.setCachePath(getCacheDir());
 
         // Setting map focal position to a fixed position and setting camera zoom
-        map.moveCamera(new LatLng(35.767234, 51.330743),0 );
-        map.setZoom(14,0);
+        map.moveCamera(new LatLng(35.767234, 51.330743), 0);
+        map.setZoom(14, 0);
     }
 }

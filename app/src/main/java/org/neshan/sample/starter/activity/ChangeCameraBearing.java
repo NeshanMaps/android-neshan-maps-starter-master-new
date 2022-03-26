@@ -1,32 +1,29 @@
 package org.neshan.sample.starter.activity;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ToggleButton;
 
-import com.carto.core.MapRange;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
 import org.neshan.sample.starter.R;
 import org.neshan.sample.starter.custom_view.CircularSeekBar;
 
-
 public class ChangeCameraBearing extends AppCompatActivity {
 
     // map UI element
-    MapView map;
+    private MapView map;
     // camera bearing control
-    CircularSeekBar bearingSeekBar;
+    private CircularSeekBar bearingSeekBar;
 
     // variable that hold camera bearing
     float cameraBearing;
 
     boolean isCameraRotationEnable = true;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

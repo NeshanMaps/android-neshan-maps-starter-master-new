@@ -1,12 +1,12 @@
 package org.neshan.sample.starter.adapter;
 
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.neshan.common.model.LatLng;
 import org.neshan.sample.starter.R;
@@ -17,11 +17,10 @@ import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
-
     private List<Item> items;
     private OnSearchItemListener onSearchItemListener;
 
-    public SearchAdapter(List<Item> items , OnSearchItemListener onSearchItemListener) {
+    public SearchAdapter(List<Item> items, OnSearchItemListener onSearchItemListener) {
         this.items = items;
         this.onSearchItemListener = onSearchItemListener;
     }
@@ -29,14 +28,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search , parent , false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            holder.tvTitle.setText(items.get(position).getTitle());
-            holder.tvAddress.setText(items.get(position).getAddress());
+        holder.tvTitle.setText(items.get(position).getTitle());
+        holder.tvAddress.setText(items.get(position).getAddress());
     }
 
     @Override
@@ -44,10 +43,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         return items.size();
     }
 
-
-
-
-    public void updateList(List<Item> items){
+    public void updateList(List<Item> items) {
         this.items = items;
         notifyDataSetChanged();
     }
@@ -68,12 +64,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         @Override
         public void onClick(View v) {
             Location location = items.get(getAdapterPosition()).getLocation();
-            LatLng LatLng = new LatLng(location.getLatitude() , location.getLongitude());
+            LatLng LatLng = new LatLng(location.getLatitude(), location.getLongitude());
             onSearchItemListener.onSeachItemClick(LatLng);
         }
     }
 
-    public interface OnSearchItemListener{
+    public interface OnSearchItemListener {
         void onSeachItemClick(LatLng LatLng);
     }
 }

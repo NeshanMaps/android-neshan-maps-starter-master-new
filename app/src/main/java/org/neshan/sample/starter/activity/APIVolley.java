@@ -7,6 +7,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -28,12 +30,10 @@ import org.neshan.sample.starter.R;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.appcompat.app.AppCompatActivity;
 public class APIVolley extends AppCompatActivity {
 
-
     // map UI element
-    MapView map;
+    private MapView map;
 
     // a bottomsheet to show address on
     private View reverseBottomSheetView;
@@ -69,18 +69,18 @@ public class APIVolley extends AppCompatActivity {
         initMap();
 
         // when long clicked on map, a marker is added in clicked location
-        map.setOnMapLongClickListener(latLng ->{
+        map.setOnMapLongClickListener(latLng -> {
             // addMarker adds a marker (pretty self explanatory :D) to the clicked location
             addMarker(latLng);
 
             //calling NeshanReverseAPI to get address of a location and showing it on a bottom sheet
             neshanReverseAPI(latLng);
 
-        } );
+        });
     }
 
     // We use findViewByID for every element in our layout file here
-    private void initViews(){
+    private void initViews() {
         map = findViewById(R.id.map);
 
         // UI elements in bottom sheet
@@ -93,17 +93,15 @@ public class APIVolley extends AppCompatActivity {
         reverseBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
-
     // Initializing map
-    private void initMap(){
+    private void initMap() {
         // Setting map focal position to a fixed position and setting camera zoom
-        map.moveCamera(new LatLng(35.767234, 51.330743),0 );
-        map.setZoom(14,0);
+        map.moveCamera(new LatLng(35.767234, 51.330743), 0);
+        map.setZoom(14, 0);
     }
 
-
     // This method gets a LatLng as input and adds a marker on that position
-    private void addMarker(LatLng loc){
+    private void addMarker(LatLng loc) {
 
         // Creating animation for marker. We should use an object of type AnimationStyleBuilder, set
         // all animation features on it and then call buildStyle() method that returns an object of type
@@ -131,7 +129,6 @@ public class APIVolley extends AppCompatActivity {
         map.addMarker(marker);
     }
 
-
     private void neshanReverseAPI(LatLng loc) {
         String requestURL = "https://api.neshan.org/v1/reverse?lat=" + loc.getLatitude() + "&lng=" + loc.getLongitude();
         final String latLngAddr = String.format("%.6f", loc.getLatitude()) + "," + String.format("%.6f", loc.getLongitude());
@@ -149,11 +146,10 @@ public class APIVolley extends AppCompatActivity {
                         String address = obj.getString("address");
 
                         // if server was able to return neighbourhood and address to us
-                        if(!neighbourhood.equals("null") && !address.equals("null")) {
+                        if (!neighbourhood.equals("null") && !address.equals("null")) {
                             addressTitle.setText(neighbourhood);
                             addressDetails.setText(address);
-                        }
-                        else{
+                        } else {
                             addressTitle.setText("آدرس نامشخص");
                             addressDetails.setText(latLngAddr);
                         }
@@ -163,10 +159,10 @@ public class APIVolley extends AppCompatActivity {
                         addressTitle.setText("آدرس نامشخص");
                         addressDetails.setText(latLngAddr);
                     }
-                }, error -> error.printStackTrace()){
+                }, error -> error.printStackTrace()) {
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String>  params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 // TODO: replace "YOUR_API_KEY" with your api key
                 params.put("Api-Key", "service.kREahwU7lND32ygT9ZgPFXbwjzzKukdObRZsnUAJ");
                 return params;

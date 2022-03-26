@@ -2,6 +2,13 @@ package org.neshan.sample.starter.activity;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.carto.styles.AnimationStyle;
 import com.carto.styles.AnimationStyleBuilder;
@@ -11,20 +18,6 @@ import com.carto.styles.MarkerStyleBuilder;
 import com.carto.utils.BitmapUtils;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
-import androidx.appcompat.app.AppCompatActivity;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.CertificatePinner;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.TextView;
-
 import org.json.JSONObject;
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
@@ -33,6 +26,11 @@ import org.neshan.sample.starter.R;
 
 import java.io.IOException;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class APIOkHttp extends AppCompatActivity {
 
@@ -40,7 +38,7 @@ public class APIOkHttp extends AppCompatActivity {
     final int BASE_MAP_INDEX = 0;
 
     // map UI element
-    MapView map;
+    private MapView map;
 
     // a bottomsheet to show address on
     private View reverseBottomSheetView;
@@ -49,7 +47,6 @@ public class APIOkHttp extends AppCompatActivity {
     //ui elements in bottom sheet
     private TextView addressTitle;
     private TextView addressDetails;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,14 +98,12 @@ public class APIOkHttp extends AppCompatActivity {
         reverseBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
-
     // Initializing map
     private void initMap() {
         // Setting map focal position to a fixed position and setting camera zoom
         map.moveCamera(new LatLng(35.767234, 51.330743), 0);
         map.setZoom(14, 0);
     }
-
 
     // This method gets a LatLng as input and adds a marker on that position
     private void addMarker(LatLng loc) {
@@ -138,7 +133,6 @@ public class APIOkHttp extends AppCompatActivity {
         // Adding marker to markerLayer, or showing marker on map!
         map.addMarker(marker);
     }
-
 
     private void neshanReverseAPI(LatLng loc) {
         String requestURL = "https://api.neshan.org/v1/reverse?lat=" + loc.getLatitude() + "&lng=" + loc.getLongitude();

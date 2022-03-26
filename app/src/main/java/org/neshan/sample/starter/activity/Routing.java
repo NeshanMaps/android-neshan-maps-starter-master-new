@@ -9,6 +9,9 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.carto.core.ScreenBounds;
 import com.carto.graphics.Color;
 import com.carto.styles.AnimationStyle;
 import com.carto.styles.AnimationStyleBuilder;
@@ -20,11 +23,12 @@ import com.carto.styles.MarkerStyleBuilder;
 import com.carto.utils.BitmapUtils;
 
 import org.neshan.common.model.LatLng;
+import org.neshan.common.model.LatLngBounds;
+import org.neshan.common.utils.PolylineEncoding;
 import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Marker;
 import org.neshan.mapsdk.model.Polyline;
 import org.neshan.sample.starter.R;
-import org.neshan.common.utils.PolylineEncoding;
 import org.neshan.servicessdk.direction.NeshanDirection;
 import org.neshan.servicessdk.direction.model.DirectionStep;
 import org.neshan.servicessdk.direction.model.NeshanDirectionResult;
@@ -32,32 +36,32 @@ import org.neshan.servicessdk.direction.model.Route;
 
 import java.util.ArrayList;
 
-import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Routing extends AppCompatActivity {
+
     // map UI element
-    MapView map;
+    private MapView map;
 
     // define two toggle button and connecting together for two type of routing
-    ToggleButton overviewToggleButton;
-    ToggleButton stepByStepToggleButton;
+    private ToggleButton overviewToggleButton;
+    private ToggleButton stepByStepToggleButton;
 
     // we save decoded Response of routing encoded string because we don't want request every time we clicked toggle buttons
-    ArrayList<LatLng> routeOverviewPolylinePoints;
-    ArrayList<LatLng> decodedStepByStepPath;
+    private ArrayList<LatLng> routeOverviewPolylinePoints;
+    private ArrayList<LatLng> decodedStepByStepPath;
 
     // value for difference mapSetZoom
-    boolean overview = false;
+    private boolean overview = false;
 
     // Marker that will be added on map
-    Marker marker;
+    private Marker marker;
     // List of created markers
-    ArrayList<Marker> markers = new ArrayList();
+    private ArrayList<Marker> markers = new ArrayList();
     // marker animation style
-    AnimationStyle animSt;
+    private AnimationStyle animSt;
     // drawn path of route
     private Polyline onMapPolyline;
 
@@ -124,7 +128,7 @@ public class Routing extends AppCompatActivity {
                         overview = false;
                     }
                 }
-                if (!isChecked && onMapPolyline!=null) {
+                if (!isChecked && onMapPolyline != null) {
                     map.removePolyline(onMapPolyline);
                 }
             }
@@ -181,20 +185,24 @@ public class Routing extends AppCompatActivity {
             public void onResponse(Call<NeshanDirectionResult> call, Response<NeshanDirectionResult> response) {
 
                 // two type of routing
-                Route route = response.body().getRoutes().get(0);
-                routeOverviewPolylinePoints = new ArrayList<>(PolylineEncoding.decode(route.getOverviewPolyline().getEncodedPolyline()));
-                decodedStepByStepPath = new ArrayList<>();
+                if (response != null && response.body() != null && response.body().getRoutes() != null && !response.body().getRoutes().isEmpty()) {
+                    Route route = response.body().getRoutes().get(0);
+                    routeOverviewPolylinePoints = new ArrayList<>(PolylineEncoding.decode(route.getOverviewPolyline().getEncodedPolyline()));
+                    decodedStepByStepPath = new ArrayList<>();
 
-                // decoding each segment of steps and putting to an array
-                for (DirectionStep step : route.getLegs().get(0).getDirectionSteps()) {
-                    decodedStepByStepPath.addAll(PolylineEncoding.decode(step.getEncodedPolyline()));
+                    // decoding each segment of steps and putting to an array
+                    for (DirectionStep step : route.getLegs().get(0).getDirectionSteps()) {
+                        decodedStepByStepPath.addAll(PolylineEncoding.decode(step.getEncodedPolyline()));
+                    }
+
+                    onMapPolyline = new Polyline(routeOverviewPolylinePoints, getLineStyle());
+                    //draw polyline between route points
+                    map.addPolyline(onMapPolyline);
+                    // focusing camera on first point of drawn line
+                    mapSetPosition(overview);
+                } else {
+                    Toast.makeText(Routing.this, "مسیری یافت نشد", Toast.LENGTH_LONG).show();
                 }
-
-                onMapPolyline = new Polyline(routeOverviewPolylinePoints, getLineStyle());
-                //draw polyline between route points
-                map.addPolyline(onMapPolyline);
-                // focusing camera on first point of drawn line
-                mapSetPosition(overview);
             }
 
             @Override
@@ -237,15 +245,24 @@ public class Routing extends AppCompatActivity {
             overviewToggleButton.setChecked(false);
             stepByStepToggleButton.setChecked(false);
         } else if (overviewToggleButton.isChecked()) {
-            map.removePolyline(onMapPolyline);
-            onMapPolyline = new Polyline(routeOverviewPolylinePoints, getLineStyle());
-            //draw polyline between route points
-            map.addPolyline(onMapPolyline);
+            try {
+                map.removePolyline(onMapPolyline);
+                onMapPolyline = new Polyline(routeOverviewPolylinePoints, getLineStyle());
+                //draw polyline between route points
+                map.addPolyline(onMapPolyline);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         } else if (stepByStepToggleButton.isChecked()) {
-            map.removePolyline(onMapPolyline);
-            onMapPolyline = new Polyline(decodedStepByStepPath, getLineStyle());
-            //draw polyline between route points
-            map.addPolyline(onMapPolyline);
+            try {
+                map.removePolyline(onMapPolyline);
+                onMapPolyline = new Polyline(decodedStepByStepPath, getLineStyle());
+                //draw polyline between route points
+                map.addPolyline(onMapPolyline);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
     }

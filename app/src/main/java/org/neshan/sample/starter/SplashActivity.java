@@ -1,12 +1,14 @@
 package org.neshan.sample.starter;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class SplashActivity extends AppCompatActivity {
+
     private static final String TAG = SplashActivity.class.getName();
     private static final int SPLASH_SCREEN_DELAY = 1000;
 

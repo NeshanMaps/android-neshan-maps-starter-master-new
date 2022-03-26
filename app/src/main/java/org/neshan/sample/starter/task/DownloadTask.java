@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class DownloadTask extends AsyncTask<String, Void, JSONObject> {
+
     // hold reference of activity to emit messages
     private Callback callback;
 
@@ -45,7 +46,7 @@ public class DownloadTask extends AsyncTask<String, Void, JSONObject> {
             HttpURLConnection conn = (HttpURLConnection) u.openConnection();
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 //Get the Stream reader ready
-                BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()),8192);
+                BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()), 8192);
                 //Loop through the return data and copy it over to the response object to be processed
                 String line;
                 while ((line = input.readLine()) != null) {
@@ -60,7 +61,7 @@ public class DownloadTask extends AsyncTask<String, Void, JSONObject> {
         return null;
     }
 
-    public interface Callback{
+    public interface Callback {
         void onJsonDownloaded(JSONObject jsonObject);
     }
 }

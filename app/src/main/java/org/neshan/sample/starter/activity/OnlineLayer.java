@@ -5,12 +5,12 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ToggleButton;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.carto.core.ScreenBounds;
 import com.carto.core.ScreenPos;
@@ -28,17 +28,16 @@ import org.neshan.common.model.LatLng;
 import org.neshan.common.model.LatLngBounds;
 import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Marker;
-import org.neshan.sample.starter.task.DownloadTask;
 import org.neshan.sample.starter.R;
+import org.neshan.sample.starter.task.DownloadTask;
 
 import java.util.ArrayList;
 
 public class OnlineLayer extends AppCompatActivity implements DownloadTask.Callback {
 
     // map UI element
-    MapView map;
-    ArrayList<Marker> markers=new ArrayList<>();
-
+    private MapView map;
+    private ArrayList<Marker> markers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +54,42 @@ public class OnlineLayer extends AppCompatActivity implements DownloadTask.Callb
         super.onStart();
         // everything related to ui is initialized here
         initLayoutReferences();
+    }
+
+    @Override
+    public void onJsonDownloaded(JSONObject jsonObject) {
+        try {
+            JSONArray features = jsonObject.getJSONArray("features");
+            // variable for creating bound
+            // min = south-west
+            // max = north-east
+            double minLat = Double.MAX_VALUE;
+            double minLng = Double.MAX_VALUE;
+            double maxLat = Double.MIN_VALUE;
+            double maxLng = Double.MIN_VALUE;
+            for (int i = 0; i < features.length(); i++) {
+                JSONObject geometry = features.getJSONObject(i).getJSONObject("geometry");
+                JSONArray coordinates = geometry.getJSONArray("coordinates");
+                LatLng LatLng = new LatLng(coordinates.getDouble(1), coordinates.getDouble(0));
+
+                // validating min and max
+                minLat = Math.min(LatLng.getLatitude(), minLat);
+                minLng = Math.min(LatLng.getLongitude(), minLng);
+                maxLat = Math.max(LatLng.getLatitude(), maxLat);
+                maxLng = Math.max(LatLng.getLongitude(), maxLng);
+
+                markers.add(addMarker(LatLng));
+            }
+            map.moveToCameraBounds(
+                    new LatLngBounds(new LatLng(minLat, minLng), new LatLng(maxLat, maxLng)),
+                    new ScreenBounds(
+                            new ScreenPos(0, 0),
+                            new ScreenPos(map.getWidth(), map.getHeight())
+                    ),
+                    true, 0.25f);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     // Initializing layout references (views, map and map events)
@@ -74,7 +109,6 @@ public class OnlineLayer extends AppCompatActivity implements DownloadTask.Callb
     private void initViews() {
         map = findViewById(R.id.map);
     }
-
 
     // Initializing map
     private void initMap() {
@@ -121,42 +155,6 @@ public class OnlineLayer extends AppCompatActivity implements DownloadTask.Callb
         return marker;
     }
 
-    @Override
-    public void onJsonDownloaded(JSONObject jsonObject) {
-        try {
-            JSONArray features = jsonObject.getJSONArray("features");
-            // variable for creating bound
-            // min = south-west
-            // max = north-east
-            double minLat = Double.MAX_VALUE;
-            double minLng = Double.MAX_VALUE;
-            double maxLat = Double.MIN_VALUE;
-            double maxLng = Double.MIN_VALUE;
-            for (int i = 0; i < features.length(); i++) {
-                JSONObject geometry = features.getJSONObject(i).getJSONObject("geometry");
-                JSONArray coordinates = geometry.getJSONArray("coordinates");
-                LatLng LatLng = new LatLng(coordinates.getDouble(1),coordinates.getDouble(0));
-
-                // validating min and max
-                minLat = Math.min(LatLng.getLatitude(), minLat);
-                minLng = Math.min(LatLng.getLongitude(), minLng);
-                maxLat = Math.max(LatLng.getLatitude(), maxLat);
-                maxLng = Math.max(LatLng.getLongitude(), maxLng);
-
-                markers.add(addMarker(LatLng));
-            }
-            map.moveToCameraBounds(
-                    new LatLngBounds(new LatLng(minLat,minLng ), new LatLng(maxLat,maxLng )),
-                    new ScreenBounds(
-                            new ScreenPos(0,0),
-                            new ScreenPos(map.getWidth(),map.getHeight())
-                    ),
-                    true, 0.25f);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void toggleOnlineLayer(View view) {
         ToggleButton toggleButton = (ToggleButton) view;
         if (toggleButton.isChecked()) {
@@ -165,7 +163,7 @@ public class OnlineLayer extends AppCompatActivity implements DownloadTask.Callb
                 downloadTask.execute("https://api.neshan.org/points.geojson");
             }
         } else {
-            for (Marker marker:markers) {
+            for (Marker marker : markers) {
                 map.removeMarker(marker);
             }
         }

@@ -1,14 +1,13 @@
 package org.neshan.sample.starter.activity;
 
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
@@ -18,11 +17,12 @@ import org.neshan.sample.starter.R;
 public class ChangeStyle extends AppCompatActivity {
 
     // map UI element
-    MapView map;
+    private MapView map;
     // save current map style
-    @NeshanMapStyle int mapStyle;
+    @NeshanMapStyle
+    private int mapStyle;
     // map style control
-    ImageView themePreview;
+    private ImageView themePreview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,19 +66,17 @@ public class ChangeStyle extends AppCompatActivity {
     }
 
     // We use findViewByID for every element in our layout file here
-    private void initViews(){
+    private void initViews() {
         map = findViewById(R.id.map);
         themePreview = findViewById(R.id.theme_preview);
     }
 
-
     // Initializing map
-    private void initMap(){
+    private void initMap() {
         mapStyle = NeshanMapStyle.STANDARD_DAY;
-
         // Setting map focal position to a fixed position and setting camera zoom
-        map.moveCamera(new LatLng(35.767234, 51.330743),0 );
-        map.setZoom(14,0);
+        map.moveCamera(new LatLng(35.767234, 51.330743), 0);
+        map.setZoom(14, 0);
         map.setTrafficEnabled(true);
     }
 
