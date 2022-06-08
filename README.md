@@ -77,9 +77,9 @@ Then you can add Neshan dependencies to your `build.grade (module:app)`
 ```groovy
 dependencies {
     //Neshan sdk library
-    implementation 'neshan-android-sdk:mobile-sdk:1.0.0'
+    implementation 'neshan-android-sdk:mobile-sdk:1.0.1'
     implementation 'neshan-android-sdk:services-sdk:1.0.0'
-    implementation 'neshan-android-sdk:common-sdk:0.0.1'
+    implementation 'neshan-android-sdk:common-sdk:0.0.2'
 
     //Play Services
     implementation 'com.google.android.gms:play-services-gcm:16.1.0'
