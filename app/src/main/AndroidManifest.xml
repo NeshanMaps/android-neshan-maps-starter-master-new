@@ -57,8 +57,6 @@
             android:exported="false"/>
         <activity android:name=".activity.APIOkHttp"
             android:exported="false"/>
-        <activity android:name=".activity.Cache"
-            android:exported="false"/>
         <activity android:name=".activity.RemoveMarker"
             android:exported="false"/>
         <activity android:name=".activity.AddLabel"

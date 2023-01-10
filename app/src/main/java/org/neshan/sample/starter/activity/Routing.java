@@ -11,7 +11,6 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.carto.core.ScreenBounds;
 import com.carto.graphics.Color;
 import com.carto.styles.AnimationStyle;
 import com.carto.styles.AnimationStyleBuilder;
@@ -23,7 +22,6 @@ import com.carto.styles.MarkerStyleBuilder;
 import com.carto.utils.BitmapUtils;
 
 import org.neshan.common.model.LatLng;
-import org.neshan.common.model.LatLngBounds;
 import org.neshan.common.utils.PolylineEncoding;
 import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Marker;

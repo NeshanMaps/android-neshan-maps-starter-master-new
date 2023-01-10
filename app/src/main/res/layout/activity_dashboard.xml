@@ -665,49 +665,6 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/item15"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            app:cardBackgroundColor="@color/lightPrimaryColor"
-            app:cardCornerRadius="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="4dp"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item13"
-            android:onClick="goToCacheActivity">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="58dp"
-                    android:adjustViewBounds="true"
-                    app:srcCompat="@drawable/dashboard_cache_32dp"
-                    android:layout_marginTop="8dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/textPrimaryColorInverse"
-                    android:textSize="15sp"
-                    android:text="کش کردن نقشه"
-                    android:gravity="center"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="8dp"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
             android:id="@+id/item16"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -801,11 +758,11 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:gravity="center"
-            app:cardBackgroundColor="@color/darkPrimaryColor"
+            app:cardBackgroundColor="@color/lightPrimaryColor"
             app:cardCornerRadius="8dp"
             app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item15"
+            app:layout_constraintTop_toBottomOf="@id/item13"
             android:onClick="goToRoutingActivity">
 
             <LinearLayout
@@ -884,14 +841,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            app:cardBackgroundColor="@color/lightPrimaryColor"
+            app:cardBackgroundColor="@color/darkPrimaryColor"
             app:cardCornerRadius="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:layout_marginStart="4dp"
             app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item17"
+            app:layout_constraintTop_toBottomOf="@id/item18"
             android:onClick="goToMarkerClusteringActivity">
 
             <LinearLayout
@@ -1023,7 +980,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            app:cardBackgroundColor="@color/darkPrimaryColor"
+            app:cardBackgroundColor="@color/lightPrimaryColor"
             app:cardCornerRadius="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"

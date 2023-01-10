@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
@@ -19,7 +20,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import com.carto.BuildConfig;
 import com.carto.styles.MarkerStyle;
 import com.carto.styles.MarkerStyleBuilder;
 import com.carto.utils.BitmapUtils;
@@ -33,6 +36,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.Priority;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -47,7 +51,6 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Marker;
-import org.neshan.sample.starter.BuildConfig;
 import org.neshan.sample.starter.R;
 
 import java.text.DateFormat;
@@ -90,6 +93,10 @@ public class UserLocation extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_user_location);
+
+
+        // Initializing user location
+        initLocation();
     }
 
     @Override
@@ -97,16 +104,15 @@ public class UserLocation extends AppCompatActivity {
         super.onStart();
         // everything related to ui is initialized here
         initLayoutReferences();
-        // Initializing user location
-        initLocation();
+
         startReceivingLocationUpdates();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startLocationUpdates();
-    }
+//    @Override
+//    protected void onPostResume() {
+//        super.onPostResume();
+//        startLocationUpdates();
+//    }
 
     @Override
     protected void onPause() {
@@ -172,15 +178,12 @@ public class UserLocation extends AppCompatActivity {
 
         mRequestingLocationUpdates = false;
 
-        locationRequest = new LocationRequest();
-        locationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
-        locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
-        builder.addLocationRequest(locationRequest);
-        locationSettingsRequest = builder.build();
-
+        if (locationRequest == null) {
+            locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, UPDATE_INTERVAL_IN_MILLISECONDS).build();
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+            builder.addLocationRequest(locationRequest);
+            locationSettingsRequest = builder.build();
+        }
     }
 
     /**
@@ -197,10 +200,12 @@ public class UserLocation extends AppCompatActivity {
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                         Log.i(TAG, "All location settings are satisfied.");
 
-                        //noinspection MissingPermission
-                        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+                        if (ActivityCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            Log.d("UserLocationUpdater", " required permissions are not granted ");
+                            return;
+                        }
 
-                        onLocationChange();
+                        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {
@@ -209,9 +214,9 @@ public class UserLocation extends AppCompatActivity {
                         int statusCode = ((ApiException) e).getStatusCode();
                         switch (statusCode) {
                             case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                                Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade " +
-                                        "location settings ");
                                 try {
+                                    Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade " +
+                                            "location settings ");
                                     // Show the dialog by calling startResolutionForResult(), and check the
                                     // result in onActivityResult().
                                     ResolvableApiException rae = (ResolvableApiException) e;
@@ -228,7 +233,7 @@ public class UserLocation extends AppCompatActivity {
                                 Toast.makeText(UserLocation.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
 
-                        onLocationChange();
+//                        onLocationChange();
                     }
                 });
     }
@@ -287,6 +292,7 @@ public class UserLocation extends AppCompatActivity {
     private void onLocationChange() {
         if (userLocation != null) {
             addUserMarker(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+            map.moveCamera(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), .5f);
         }
     }
 
@@ -294,20 +300,22 @@ public class UserLocation extends AppCompatActivity {
     private void addUserMarker(LatLng loc) {
         //remove existing marker from map
         if (marker != null) {
-            map.removeMarker(marker);
+            marker.setLatLng(loc);
+        } else {
+            // Creating marker style. We should use an object of type MarkerStyleCreator, set all features on it
+            // and then call buildStyle method on it. This method returns an object of type MarkerStyle
+            MarkerStyleBuilder markStCr = new MarkerStyleBuilder();
+            markStCr.setSize(30f);
+            markStCr.setBitmap(BitmapUtils.createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_marker)));
+            MarkerStyle markSt = markStCr.buildStyle();
+
+            // Creating user marker
+            marker = new Marker(loc, markSt);
+
+            // Adding user marker to map!
+            map.addMarker(marker);
         }
-        // Creating marker style. We should use an object of type MarkerStyleCreator, set all features on it
-        // and then call buildStyle method on it. This method returns an object of type MarkerStyle
-        MarkerStyleBuilder markStCr = new MarkerStyleBuilder();
-        markStCr.setSize(30f);
-        markStCr.setBitmap(BitmapUtils.createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_marker)));
-        MarkerStyle markSt = markStCr.buildStyle();
 
-        // Creating user marker
-        marker = new Marker(loc, markSt);
-
-        // Adding user marker to map!
-        map.addMarker(marker);
     }
 
     public void focusOnUserLocation(View view) {

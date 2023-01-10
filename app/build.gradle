@@ -47,8 +47,8 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     //Play Services
-    implementation 'com.google.android.gms:play-services-gcm:16.1.0'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
     //Test
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.2.0'
@@ -57,9 +57,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     //Neshan sdk library
-    implementation 'neshan-android-sdk:mobile-sdk:1.0.1@aar'
+    api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+//    implementation 'neshan-android-sdk:mobile-sdk:1.0.1@aar'
     implementation 'neshan-android-sdk:services-sdk:1.0.0@aar'
-    implementation 'neshan-android-sdk:common-sdk:0.0.2@aar'
+//    implementation 'neshan-android-sdk:common-sdk:0.0.2@aar'
 
     //Room ORM
     api "androidx.room:room-runtime:2.2.5"
