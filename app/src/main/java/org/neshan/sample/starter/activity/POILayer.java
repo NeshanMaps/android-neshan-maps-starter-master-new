@@ -93,14 +93,14 @@ public class POILayer extends AppCompatActivity {
 
     public void changeStyle(View view) {
         switch (mapStyle) {
+            case NeshanMapStyle.NESHAN:
+                mapStyle = NeshanMapStyle.STANDARD_DAY;
+                break;
             case NeshanMapStyle.STANDARD_DAY:
                 mapStyle = NeshanMapStyle.NESHAN_NIGHT;
                 break;
             case NeshanMapStyle.NESHAN_NIGHT:
                 mapStyle = NeshanMapStyle.NESHAN;
-                break;
-            case NeshanMapStyle.NESHAN:
-                mapStyle = NeshanMapStyle.STANDARD_DAY;
                 break;
         }
         runOnUiThread(() -> validateThemePreview());

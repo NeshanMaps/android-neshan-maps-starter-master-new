@@ -27,6 +27,7 @@ import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Marker;
 import org.neshan.sample.starter.R;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -142,8 +143,9 @@ public class APIVolley extends AppCompatActivity {
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        String neighbourhood = obj.getString("neighbourhood");
-                        String address = obj.getString("address");
+                        String neighbourhood = new String(obj.getString("neighbourhood").getBytes(StandardCharsets.ISO_8859_1),"UTF-8");
+                        String address = new String(obj.getString("address").getBytes(StandardCharsets.ISO_8859_1),"UTF-8");
+
 
                         // if server was able to return neighbourhood and address to us
                         if (!neighbourhood.equals("null") && !address.equals("null")) {

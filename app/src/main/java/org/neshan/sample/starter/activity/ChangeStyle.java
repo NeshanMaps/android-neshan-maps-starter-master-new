@@ -73,7 +73,7 @@ public class ChangeStyle extends AppCompatActivity {
 
     // Initializing map
     private void initMap() {
-        mapStyle = NeshanMapStyle.STANDARD_DAY;
+        mapStyle = NeshanMapStyle.NESHAN;
         // Setting map focal position to a fixed position and setting camera zoom
         map.moveCamera(new LatLng(35.767234, 51.330743), 0);
         map.setZoom(14, 0);
@@ -82,14 +82,14 @@ public class ChangeStyle extends AppCompatActivity {
 
     public void changeStyle(View view) {
         switch (mapStyle) {
+            case NeshanMapStyle.NESHAN:
+                mapStyle = NeshanMapStyle.STANDARD_DAY;
+                break;
             case NeshanMapStyle.STANDARD_DAY:
                 mapStyle = NeshanMapStyle.NESHAN_NIGHT;
                 break;
             case NeshanMapStyle.NESHAN_NIGHT:
                 mapStyle = NeshanMapStyle.NESHAN;
-                break;
-            case NeshanMapStyle.NESHAN:
-                mapStyle = NeshanMapStyle.STANDARD_DAY;
                 break;
         }
         runOnUiThread(new Runnable() {

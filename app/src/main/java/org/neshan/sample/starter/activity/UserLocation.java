@@ -292,7 +292,6 @@ public class UserLocation extends AppCompatActivity {
     private void onLocationChange() {
         if (userLocation != null) {
             addUserMarker(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
-            map.moveCamera(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), .5f);
         }
     }
 
