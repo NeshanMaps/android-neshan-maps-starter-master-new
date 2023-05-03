@@ -53,14 +53,32 @@ public class ChangeStyle extends AppCompatActivity {
 
     private void validateThemePreview() {
         switch (mapStyle) {
+            case NeshanMapStyle.NESHAN:
+                themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_standard_day, getTheme()));
+                break;
             case NeshanMapStyle.STANDARD_DAY:
                 themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_standard_night, getTheme()));
                 break;
             case NeshanMapStyle.NESHAN_NIGHT:
-                themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_neshan, getTheme()));
+                themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_1, getTheme()));
                 break;
-            case NeshanMapStyle.NESHAN:
-                themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_standard_day, getTheme()));
+            case NeshanMapStyle.STYLE_1:
+                themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_2, getTheme()));
+                break;
+            case NeshanMapStyle.STYLE_2:
+                themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_3, getTheme()));
+                break;
+            case NeshanMapStyle.STYLE_3:
+                themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_4, getTheme()));
+                break;
+            case NeshanMapStyle.STYLE_4:
+                themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_5, getTheme()));
+                break;
+            case NeshanMapStyle.STYLE_5:
+                themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_6, getTheme()));
+                break;
+            case NeshanMapStyle.STYLE_6:
+                themePreview.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.map_style_neshan, getTheme()));
                 break;
         }
     }
@@ -89,6 +107,24 @@ public class ChangeStyle extends AppCompatActivity {
                 mapStyle = NeshanMapStyle.NESHAN_NIGHT;
                 break;
             case NeshanMapStyle.NESHAN_NIGHT:
+                mapStyle = NeshanMapStyle.STYLE_1;
+                break;
+            case NeshanMapStyle.STYLE_1:
+                mapStyle = NeshanMapStyle.STYLE_2;
+                break;
+            case NeshanMapStyle.STYLE_2:
+                mapStyle = NeshanMapStyle.STYLE_3;
+                break;
+            case NeshanMapStyle.STYLE_3:
+                mapStyle = NeshanMapStyle.STYLE_4;
+                break;
+            case NeshanMapStyle.STYLE_4:
+                mapStyle = NeshanMapStyle.STYLE_5;
+                break;
+            case NeshanMapStyle.STYLE_5:
+                mapStyle = NeshanMapStyle.STYLE_6;
+                break;
+            case NeshanMapStyle.STYLE_6:
                 mapStyle = NeshanMapStyle.NESHAN;
                 break;
         }
