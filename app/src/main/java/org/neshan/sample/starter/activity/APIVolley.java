@@ -166,7 +166,7 @@ public class APIVolley extends AppCompatActivity {
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
                 // TODO: replace "YOUR_API_KEY" with your api key
-                params.put("Api-Key", "service.kREahwU7lND32ygT9ZgPFXbwjzzKukdObRZsnUAJ");
+                params.put("Api-Key", "YOUR-API-KEY");
                 return params;
             }
         };

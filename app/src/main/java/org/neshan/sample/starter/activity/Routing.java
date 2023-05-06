@@ -177,7 +177,7 @@ public class Routing extends AppCompatActivity {
 
     // request routing method from Neshan Server
     private void neshanRoutingApi() {
-        new NeshanDirection.Builder("service.VNlPhrWb3wYRzEYmstQh3GrAXyhyaN55AqUSRR3V", markers.get(0).getLatLng(), markers.get(1).getLatLng())
+        new NeshanDirection.Builder("YOUR-API-KEY", markers.get(0).getLatLng(), markers.get(1).getLatLng())
                 .build().call(new Callback<NeshanDirectionResult>() {
             @Override
             public void onResponse(Call<NeshanDirectionResult> call, Response<NeshanDirectionResult> response) {

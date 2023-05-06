@@ -123,7 +123,7 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
     private void search(String term) {
         LatLng searchPosition = map.getCameraTargetPosition();
         updateCenterMarker(searchPosition);
-        new NeshanSearch.Builder("service.oz8cfBdCEdmTv8qGx1835A1OPcVdq5DcTGgMN6z9")
+        new NeshanSearch.Builder("YOUR-API-KEY")
                 .setLocation(searchPosition)
                 .setTerm(term)
                 .build().call(new Callback<NeshanSearchResult>() {

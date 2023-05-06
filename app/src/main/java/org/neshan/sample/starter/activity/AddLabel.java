@@ -71,7 +71,9 @@ public class AddLabel extends AppCompatActivity {
         // and then call buildStyle method on it. This method returns an object of type TextStyle.
         TextStyleBuilder textStyleBuilder = new TextStyleBuilder();
         textStyleBuilder.setFontSize(15f);
-        textStyleBuilder.setColor(new Color((short) 255, (short) 150, (short) 150, (short) 255));
+        textStyleBuilder.setColor(new Color((short) 255, (short) 0, (short) 255, (short) 255));
+        textStyleBuilder.setStrokeColor(new Color((short) 0, (short) 0, (short) 0, (short) 255));
+        textStyleBuilder.setStrokeWidth(1);
         TextStyle textStyle = textStyleBuilder.buildStyle();
 
         // Creating label

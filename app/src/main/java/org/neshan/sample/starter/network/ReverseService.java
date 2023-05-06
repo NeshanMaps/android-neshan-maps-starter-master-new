@@ -13,7 +13,7 @@ import retrofit2.http.Query;
  */
 public interface ReverseService {
     // TODO: replace "YOUR_API_KEY" with your api key
-    @Headers("Api-Key: service.kREahwU7lND32ygT9ZgPFXbwjzzKukdObRZsnUAJ")
+    @Headers("Api-Key: YOUR-API-KEY")
     @GET("/v2/reverse")
     Call<NeshanAddress> getReverse(@Query("lat") Double lat, @Query("lng") Double lng);
 }
