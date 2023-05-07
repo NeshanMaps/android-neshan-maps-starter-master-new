@@ -57,10 +57,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     //Neshan sdk library
-    api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-//    implementation 'neshan-android-sdk:mobile-sdk:1.0.1@aar'
+    implementation 'neshan-android-sdk:mobile-sdk:1.0.1@aar'
     implementation 'neshan-android-sdk:services-sdk:1.0.0@aar'
-//    implementation 'neshan-android-sdk:common-sdk:0.0.2@aar'
+    implementation 'neshan-android-sdk:common-sdk:0.0.2@aar'
 
     //Room ORM
     api "androidx.room:room-runtime:2.2.5"
