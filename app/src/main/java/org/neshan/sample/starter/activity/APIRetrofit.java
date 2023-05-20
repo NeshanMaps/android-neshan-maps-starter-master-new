@@ -84,13 +84,15 @@ public class APIRetrofit extends AppCompatActivity {
         getDataService.getReverse(currentLocation.getLatitude(), currentLocation.getLongitude()).enqueue(new Callback<NeshanAddress>() {
             @Override
             public void onResponse(Call<NeshanAddress> call, Response<NeshanAddress> response) {
-                String address = response.body().getAddress();
-                if (address != null && !address.isEmpty()) {
-                    addressTitle.setText(address);
-                } else {
-                    addressTitle.setText("معبر بی‌نام");
+                if (response.isSuccessful()) {
+                    String address = response.body().getAddress();
+                    if (address != null && !address.isEmpty()) {
+                        addressTitle.setText(address);
+                    } else {
+                        addressTitle.setText("معبر بی‌نام");
+                    }
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
-                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override

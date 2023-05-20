@@ -8,21 +8,22 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-import com.carto.BuildConfig;
 import com.carto.styles.MarkerStyle;
 import com.carto.styles.MarkerStyleBuilder;
 import com.carto.utils.BitmapUtils;
@@ -42,11 +43,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
@@ -55,6 +51,7 @@ import org.neshan.sample.starter.R;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Map;
 
 public class UserLocation extends AppCompatActivity {
 
@@ -88,31 +85,21 @@ public class UserLocation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // starting app in full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_user_location);
-
-
-        // Initializing user location
-        initLocation();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
         // everything related to ui is initialized here
         initLayoutReferences();
-
+        initLocation();
         startReceivingLocationUpdates();
     }
-
-//    @Override
-//    protected void onPostResume() {
-//        super.onPostResume();
-//        startLocationUpdates();
-//    }
 
     @Override
     protected void onPause() {
@@ -129,14 +116,24 @@ public class UserLocation extends AppCompatActivity {
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         Log.e(TAG, "User agreed to make required location settings changes.");
-                        // Nothing to do. startLocationupdates() gets called in onResume again.
                         break;
                     case Activity.RESULT_CANCELED:
-                        Log.e(TAG, "User chose not to make required location settings changes.");
+                        Log.e(TAG, "User choose not to make required location settings changes.");
                         mRequestingLocationUpdates = false;
                         break;
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE) {
+            if (ContextCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mRequestingLocationUpdates = true;
+                startLocationUpdates();
+            }
         }
     }
 
@@ -200,7 +197,7 @@ public class UserLocation extends AppCompatActivity {
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                         Log.i(TAG, "All location settings are satisfied.");
 
-                        if (ActivityCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        if (ContextCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             Log.d("UserLocationUpdater", " required permissions are not granted ");
                             return;
                         }
@@ -215,8 +212,7 @@ public class UserLocation extends AppCompatActivity {
                         switch (statusCode) {
                             case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                                 try {
-                                    Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade " +
-                                            "location settings ");
+                                    Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade location settings");
                                     // Show the dialog by calling startResolutionForResult(), and check the
                                     // result in onActivityResult().
                                     ResolvableApiException rae = (ResolvableApiException) e;
@@ -226,14 +222,10 @@ public class UserLocation extends AppCompatActivity {
                                 }
                                 break;
                             case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                                String errorMessage = "Location settings are inadequate, and cannot be " +
-                                        "fixed here. Fix in Settings.";
+                                String errorMessage = "Location settings are inadequate, and cannot be fixed here. Fix in Settings.";
                                 Log.e(TAG, errorMessage);
-
                                 Toast.makeText(UserLocation.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
-
-//                        onLocationChange();
                     }
                 });
     }
@@ -251,47 +243,32 @@ public class UserLocation extends AppCompatActivity {
     }
 
     public void startReceivingLocationUpdates() {
-        // Requesting ACCESS_FINE_LOCATION using Dexter library
-        Dexter.withActivity(this)
-                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse response) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityResultLauncher<String[]> checkPermissionGranted = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
+                @Override
+                public void onActivityResult(Map<String, Boolean> result) {
+                    if (result != null && result.get(Manifest.permission.ACCESS_COARSE_LOCATION) != null &&
+                            result.get(Manifest.permission.ACCESS_COARSE_LOCATION) &&
+                            result.get(Manifest.permission.ACCESS_FINE_LOCATION) != null &&
+                            result.get(Manifest.permission.ACCESS_FINE_LOCATION)) {
                         mRequestingLocationUpdates = true;
                         startLocationUpdates();
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_CODE);
                     }
-
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse response) {
-                        if (response.isPermanentlyDenied()) {
-                            // open device settings when the permission is
-                            // denied permanently
-                            openSettings();
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(com.karumi.dexter.listener.PermissionRequest permission, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-
-                }).check();
-    }
-
-    private void openSettings() {
-        Intent intent = new Intent();
-        intent.setAction(
-                Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package",
-                BuildConfig.APPLICATION_ID, null);
-        intent.setData(uri);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+                }
+            });
+            checkPermissionGranted.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
+        } else {
+            mRequestingLocationUpdates = true;
+            startLocationUpdates();
+        }
     }
 
     private void onLocationChange() {
         if (userLocation != null) {
             addUserMarker(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+            map.moveCamera(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), .5f);
         }
     }
 
@@ -324,4 +301,5 @@ public class UserLocation extends AppCompatActivity {
             map.setZoom(15, 0.25f);
         }
     }
+
 }

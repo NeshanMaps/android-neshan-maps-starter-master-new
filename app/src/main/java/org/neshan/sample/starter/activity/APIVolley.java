@@ -143,8 +143,8 @@ public class APIVolley extends AppCompatActivity {
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        String neighbourhood = new String(obj.getString("neighbourhood").getBytes(StandardCharsets.ISO_8859_1),"UTF-8");
-                        String address = new String(obj.getString("address").getBytes(StandardCharsets.ISO_8859_1),"UTF-8");
+                        String neighbourhood = new String(obj.getString("neighbourhood").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+                        String address = new String(obj.getString("address").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
 
                         // if server was able to return neighbourhood and address to us
@@ -166,10 +166,29 @@ public class APIVolley extends AppCompatActivity {
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
                 // TODO: replace "YOUR_API_KEY" with your api key
-                params.put("Api-Key", "YOUR-API-KEY");
+                params.put("Api-Key", "YOUR_API_KEY");
                 return params;
             }
         };
+
+//        StringRequest reverseGeoSearchRequest1 = new StringRequest(Request.Method.GET, requestURL, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                Log.d("Response",response.toString());
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("Error",error.toString());
+//            }
+//        }){
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String,String> map = new HashMap<>();
+//                map.put("Api-Key","service.86690d4dafb04ac3bcce0d6080f7f847");
+//                return map;
+//            }
+//        };
 
         // Add the request to the queue
         requestQueue.add(reverseGeoSearchRequest);

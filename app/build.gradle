@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     defaultConfig {
         applicationId "org.neshan.sample.starter.v2.amir"
         minSdkVersion 19
@@ -57,7 +57,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     //Neshan sdk library
-    implementation 'neshan-android-sdk:mobile-sdk:1.0.1@aar'
+//    api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation 'neshan-android-sdk:mobile-sdk:1.0.2@aar'
     implementation 'neshan-android-sdk:services-sdk:1.0.0@aar'
     implementation 'neshan-android-sdk:common-sdk:0.0.2@aar'
 
