@@ -17,7 +17,7 @@
             android:id="@+id/iv"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_neshan_logo"
+            android:src="@mipmap/ic_launcher"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
