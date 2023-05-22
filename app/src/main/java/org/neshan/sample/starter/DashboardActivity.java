@@ -145,6 +145,6 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void openGithubLink(View view) {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/NeshanMaps/android-neshan-maps-starter")));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/NeshanMaps/android-neshan-maps-starter-master-new")));
     }
 }

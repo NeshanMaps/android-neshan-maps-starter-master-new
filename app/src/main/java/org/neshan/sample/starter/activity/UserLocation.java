@@ -17,9 +17,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -51,7 +48,6 @@ import org.neshan.sample.starter.R;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Map;
 
 public class UserLocation extends AppCompatActivity {
 
@@ -116,6 +112,8 @@ public class UserLocation extends AppCompatActivity {
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         Log.e(TAG, "User agreed to make required location settings changes.");
+                        mRequestingLocationUpdates = true;
+                        startLocationUpdates();
                         break;
                     case Activity.RESULT_CANCELED:
                         Log.e(TAG, "User choose not to make required location settings changes.");
@@ -189,76 +187,62 @@ public class UserLocation extends AppCompatActivity {
      * location updates will be requested
      */
     private void startLocationUpdates() {
-        settingsClient
-                .checkLocationSettings(locationSettingsRequest)
-                .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
-                    @SuppressLint("MissingPermission")
-                    @Override
-                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                        Log.i(TAG, "All location settings are satisfied.");
+        settingsClient.checkLocationSettings(locationSettingsRequest).addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                Log.i(TAG, "All location settings are satisfied.");
 
-                        if (ContextCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            Log.d("UserLocationUpdater", " required permissions are not granted ");
-                            return;
-                        }
+                if (ContextCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Log.d("UserLocationUpdater", " required permissions are not granted ");
+                    return;
+                }
 
-                        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
-                    }
-                })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        int statusCode = ((ApiException) e).getStatusCode();
-                        switch (statusCode) {
-                            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                                try {
-                                    Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade location settings");
-                                    // Show the dialog by calling startResolutionForResult(), and check the
-                                    // result in onActivityResult().
-                                    ResolvableApiException rae = (ResolvableApiException) e;
-                                    rae.startResolutionForResult(UserLocation.this, REQUEST_CODE);
-                                } catch (IntentSender.SendIntentException sie) {
-                                    Log.i(TAG, "PendingIntent unable to execute request.");
-                                }
-                                break;
-                            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                                String errorMessage = "Location settings are inadequate, and cannot be fixed here. Fix in Settings.";
-                                Log.e(TAG, errorMessage);
-                                Toast.makeText(UserLocation.this, errorMessage, Toast.LENGTH_LONG).show();
+                fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+            }
+        }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                int statusCode = ((ApiException) e).getStatusCode();
+                switch (statusCode) {
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+                            Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade location settings");
+                            // Show the dialog by calling startResolutionForResult(), and check the
+                            // result in onActivityResult().
+                            ResolvableApiException rae = (ResolvableApiException) e;
+                            rae.startResolutionForResult(UserLocation.this, REQUEST_CODE);
+                        } catch (IntentSender.SendIntentException sie) {
+                            Log.i(TAG, "PendingIntent unable to execute request.");
                         }
-                    }
-                });
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        String errorMessage = "Location settings are inadequate, and cannot be fixed here. Fix in Settings.";
+                        Log.e(TAG, errorMessage);
+                        Toast.makeText(UserLocation.this, errorMessage, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void stopLocationUpdates() {
         // Removing location updates
-        fusedLocationClient
-                .removeLocationUpdates(locationCallback)
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getApplicationContext(), "Location updates stopped!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        fusedLocationClient.removeLocationUpdates(locationCallback).addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(getApplicationContext(), "Location updates stopped!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void startReceivingLocationUpdates() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ActivityResultLauncher<String[]> checkPermissionGranted = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
-                @Override
-                public void onActivityResult(Map<String, Boolean> result) {
-                    if (result != null && result.get(Manifest.permission.ACCESS_COARSE_LOCATION) != null &&
-                            result.get(Manifest.permission.ACCESS_COARSE_LOCATION) &&
-                            result.get(Manifest.permission.ACCESS_FINE_LOCATION) != null &&
-                            result.get(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        mRequestingLocationUpdates = true;
-                        startLocationUpdates();
-                    } else {
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_CODE);
-                    }
-                }
-            });
-            checkPermissionGranted.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
+            if (ContextCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(UserLocation.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mRequestingLocationUpdates = true;
+                startLocationUpdates();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE);
+            }
         } else {
             mRequestingLocationUpdates = true;
             startLocationUpdates();
@@ -296,9 +280,10 @@ public class UserLocation extends AppCompatActivity {
 
     public void focusOnUserLocation(View view) {
         if (userLocation != null) {
-            map.moveCamera(
-                    new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), 0.25f);
+            map.moveCamera(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), 0.25f);
             map.setZoom(15, 0.25f);
+        } else {
+            startReceivingLocationUpdates();
         }
     }
 

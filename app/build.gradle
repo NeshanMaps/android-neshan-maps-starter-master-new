@@ -4,14 +4,13 @@ android {
     compileSdkVersion 33
     defaultConfig {
         applicationId "org.neshan.sample.starter.v2.amir"
+        targetSdkVersion 33
         minSdkVersion 19
         versionCode 6
         versionName "3.0.1"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//        ndk {
-//            abiFilters 'armeabi-v7a'
-//        }
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -40,12 +39,13 @@ android {
 dependencies {
 
     //Support
-    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation "androidx.multidex:multidex-instrumentation:2.0.0"
     //Play Services
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
@@ -57,15 +57,14 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     //Neshan sdk library
-//    api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     implementation 'neshan-android-sdk:mobile-sdk:1.0.2@aar'
     implementation 'neshan-android-sdk:services-sdk:1.0.0@aar'
     implementation 'neshan-android-sdk:common-sdk:0.0.2@aar'
 
     //Room ORM
-    api "androidx.room:room-runtime:2.2.5"
-    annotationProcessor "androidx.room:room-compiler:2.4.3"
-    api "androidx.room:room-rxjava2:2.2.5"
+    api "androidx.room:room-runtime:2.5.1"
+    annotationProcessor "androidx.room:room-compiler:2.5.1"
+    api "androidx.room:room-rxjava2:2.5.1"
 
     // dexter runtime permissions
     implementation 'com.karumi:dexter:4.2.0'
