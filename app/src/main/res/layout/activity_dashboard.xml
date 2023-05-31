@@ -920,7 +920,7 @@
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:tint="@color/accentColor"
-                    app:srcCompat="@drawable/ic_neshan_logo"
+                    app:srcCompat="@mipmap/ic_launcher"
                     android:layout_marginEnd="4dp"/>
 
             </LinearLayout>
