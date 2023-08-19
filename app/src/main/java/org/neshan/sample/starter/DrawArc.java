@@ -14,12 +14,14 @@ import com.carto.styles.LineStyleBuilder;
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Circle;
+import org.neshan.mapsdk.model.Polyline;
 
 public class DrawArc extends AppCompatActivity {
 
     // map UI element
     private MapView map;
     private Circle circle;
+    private Polyline arc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,12 @@ public class DrawArc extends AppCompatActivity {
     }
 
     public void drawArc(View view) {
-        map.drawArc(new LatLng(35.701029742703604, 51.33399009376021), new LatLng(35.72488915365864, 51.38092935533464), getLineStyle());
+        if (arc == null) {
+            arc = map.drawArc(new LatLng(35.701029742703604, 51.33399009376021), new LatLng(35.72488915365864, 51.38092935533464), getLineStyle());
+        } else {
+            map.removePolyline(arc);
+            arc = null;
+        }
     }
 
     private LineStyle getLineStyle() {

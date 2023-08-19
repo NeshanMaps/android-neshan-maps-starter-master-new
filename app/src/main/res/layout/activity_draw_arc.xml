@@ -11,18 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/draw_arc"
+    <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/toggle_button_on_bg"
+        android:background="@drawable/toggle_button_bg"
+        android:checked="true"
         android:elevation="8dp"
         android:onClick="drawArc"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="رسم کمان"
-        android:textColor="#ffffff"
+        android:textColor="@color/toggle_button_text_color"
+        android:textOff="حذف کمان"
+        android:textOn="رسم کمان"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
