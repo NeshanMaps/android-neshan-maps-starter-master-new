@@ -45,6 +45,11 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToStaticMapActivity(View view) {
+        Intent intent = new Intent(this, StaticMapActivity.class);
+        startActivity(intent);
+    }
+
     public void goToAddMarkerActivity(View view) {
         Intent intent = new Intent(this, AddMarker.class);
         startActivity(intent);
