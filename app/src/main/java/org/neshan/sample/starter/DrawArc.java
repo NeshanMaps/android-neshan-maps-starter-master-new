@@ -15,7 +15,7 @@ import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
 import org.neshan.mapsdk.model.Circle;
 
-public class DrawArcActivity extends AppCompatActivity {
+public class DrawArc extends AppCompatActivity {
 
     // map UI element
     private MapView map;

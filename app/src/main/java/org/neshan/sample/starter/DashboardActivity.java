@@ -71,7 +71,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void goToDrawArcActivity(View view) {
-        Intent intent = new Intent(this, DrawArcActivity.class);
+        Intent intent = new Intent(this, DrawArc.class);
         startActivity(intent);
     }
 

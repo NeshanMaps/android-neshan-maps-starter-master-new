@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".DrawArc"
+            android:exported="false" />
+        <activity
             android:name=".StaticMap"
             android:exported="false" />
         <activity
