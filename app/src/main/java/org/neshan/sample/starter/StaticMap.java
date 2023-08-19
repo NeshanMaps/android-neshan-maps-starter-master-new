@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.neshan.mapsdk.MapView;
 
-public class StaticMapActivity extends AppCompatActivity {
+public class StaticMap extends AppCompatActivity {
 
     private MapView map;
 

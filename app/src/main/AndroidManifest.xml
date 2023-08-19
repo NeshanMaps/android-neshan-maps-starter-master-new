@@ -16,10 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DrawArcActivity"
-            android:exported="false" />
-        <activity
-            android:name=".StaticMapActivity"
+            android:name=".StaticMap"
             android:exported="false" />
         <activity
             android:name=".activity.DrawCircle"
