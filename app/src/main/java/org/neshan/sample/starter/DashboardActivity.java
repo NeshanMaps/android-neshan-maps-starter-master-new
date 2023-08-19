@@ -70,6 +70,11 @@ public class DashboardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToDrawArcActivity(View view) {
+        Intent intent = new Intent(this, DrawArcActivity.class);
+        startActivity(intent);
+    }
+
     public void goToChangeCameraTiltActivity(View view) {
         Intent intent = new Intent(this, ChangeCameraTilt.class);
         startActivity(intent);
