@@ -171,25 +171,6 @@ public class APIVolley extends AppCompatActivity {
             }
         };
 
-//        StringRequest reverseGeoSearchRequest1 = new StringRequest(Request.Method.GET, requestURL, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.d("Response",response.toString());
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("Error",error.toString());
-//            }
-//        }){
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Map<String,String> map = new HashMap<>();
-//                map.put("Api-Key","service.86690d4dafb04ac3bcce0d6080f7f847");
-//                return map;
-//            }
-//        };
-
         // Add the request to the queue
         requestQueue.add(reverseGeoSearchRequest);
     }

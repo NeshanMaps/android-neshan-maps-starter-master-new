@@ -17,6 +17,7 @@ import org.neshan.sample.starter.activity.ChangeCameraBearing;
 import org.neshan.sample.starter.activity.ChangeCameraTilt;
 import org.neshan.sample.starter.activity.ChangeStyle;
 import org.neshan.sample.starter.activity.DatabaseLayer;
+import org.neshan.sample.starter.activity.DrawArc;
 import org.neshan.sample.starter.activity.DrawCircle;
 import org.neshan.sample.starter.activity.DrawLine;
 import org.neshan.sample.starter.activity.DrawPolygon;
@@ -26,6 +27,7 @@ import org.neshan.sample.starter.activity.POILayer;
 import org.neshan.sample.starter.activity.RemoveMarker;
 import org.neshan.sample.starter.activity.Routing;
 import org.neshan.sample.starter.activity.Search;
+import org.neshan.sample.starter.activity.StaticMap;
 import org.neshan.sample.starter.activity.TrafficLayer;
 import org.neshan.sample.starter.activity.UserLocation;
 

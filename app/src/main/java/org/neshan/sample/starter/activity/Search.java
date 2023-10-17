@@ -117,7 +117,6 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
         map.setZoom(14f, 0);
         centerMarker = new Marker(LatLng, getCenterMarkerStyle());
         map.addMarker(centerMarker);
-
     }
 
     private void search(String term) {
@@ -127,25 +126,25 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnSearchI
                 .setLocation(searchPosition)
                 .setTerm(term)
                 .build().call(new Callback<NeshanSearchResult>() {
-            @Override
-            public void onResponse(Call<NeshanSearchResult> call, Response<NeshanSearchResult> response) {
-                if (response.code() == 403) {
-                    Toast.makeText(Search.this, "کلید دسترسی نامعتبر", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if (response.body() != null) {
-                    NeshanSearchResult result = response.body();
-                    items = result.getItems();
-                    adapter.updateList(items);
-                }
-            }
+                    @Override
+                    public void onResponse(Call<NeshanSearchResult> call, Response<NeshanSearchResult> response) {
+                        if (response.code() == 403) {
+                            Toast.makeText(Search.this, "کلید دسترسی نامعتبر", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (response.body() != null) {
+                            NeshanSearchResult result = response.body();
+                            items = result.getItems();
+                            adapter.updateList(items);
+                        }
+                    }
 
-            @Override
-            public void onFailure(Call<NeshanSearchResult> call, Throwable t) {
-                Log.i(TAG, "onFailure: " + t.getMessage());
-                Toast.makeText(Search.this, "ارتباط برقرار نشد!", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<NeshanSearchResult> call, Throwable t) {
+                        Log.i(TAG, "onFailure: " + t.getMessage());
+                        Toast.makeText(Search.this, "ارتباط برقرار نشد!", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void updateCenterMarker(LatLng LatLng) {

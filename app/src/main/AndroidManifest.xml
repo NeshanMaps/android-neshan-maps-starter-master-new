@@ -16,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DrawArc"
+            android:name=".activity.DrawArc"
             android:exported="false" />
         <activity
-            android:name=".StaticMap"
+            android:name=".activity.StaticMap"
             android:exported="false" />
         <activity
             android:name=".activity.DrawCircle"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DrawPolygon">
+    tools:context=".activity.DrawArc">
 
     <org.neshan.mapsdk.MapView
         android:id="@+id/map"

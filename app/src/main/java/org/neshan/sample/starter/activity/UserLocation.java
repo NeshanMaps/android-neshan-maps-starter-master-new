@@ -252,6 +252,10 @@ public class UserLocation extends AppCompatActivity {
     private void onLocationChange() {
         if (userLocation != null) {
             addUserMarker(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()));
+            if (marker != null) {
+                map.enableUserMarkerRotation(marker);
+            }
+            map.showAccuracyCircle(userLocation);
             map.moveCamera(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), .5f);
         }
     }
@@ -265,8 +269,10 @@ public class UserLocation extends AppCompatActivity {
             // Creating marker style. We should use an object of type MarkerStyleCreator, set all features on it
             // and then call buildStyle method on it. This method returns an object of type MarkerStyle
             MarkerStyleBuilder markStCr = new MarkerStyleBuilder();
-            markStCr.setSize(30f);
-            markStCr.setBitmap(BitmapUtils.createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_marker)));
+            markStCr.setSize(80f);
+            markStCr.setAnchorPointY(0);
+            markStCr.setAnchorPointX(0);
+            markStCr.setBitmap(BitmapUtils.createBitmapFromAndroidBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_user_loc_3)));
             MarkerStyle markSt = markStCr.buildStyle();
 
             // Creating user marker

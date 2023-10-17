@@ -1,4 +1,4 @@
-package org.neshan.sample.starter;
+package org.neshan.sample.starter.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,14 +13,13 @@ import com.carto.styles.LineStyleBuilder;
 
 import org.neshan.common.model.LatLng;
 import org.neshan.mapsdk.MapView;
-import org.neshan.mapsdk.model.Circle;
 import org.neshan.mapsdk.model.Polyline;
+import org.neshan.sample.starter.R;
 
 public class DrawArc extends AppCompatActivity {
 
     // map UI element
     private MapView map;
-    private Circle circle;
     private Polyline arc;
 
     @Override
